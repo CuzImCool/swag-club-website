@@ -1,0 +1,144 @@
+
+<style>
+html, body {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: #050505 !important;
+  overflow-x: hidden;
+}
+
+#itu-theme {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 100vh;
+}
+</style>
+
+<div id="itu-theme" data-color="0" style="position:relative;background:#050505;color:#fff;padding:16px;border:1px solid #888;border-radius:14px;font-family:Arial,sans-serif;">
+
+<style>
+#itu-theme a[data-hover-button],
+#itu-theme button[data-hover-button] {
+  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease, background .22s ease, border-color .22s ease;
+}
+#itu-theme a[data-hover-button]:hover,
+#itu-theme button[data-hover-button]:hover {
+  transform: translateY(-2px) scale(1.025);
+  filter: brightness(1.25);
+  box-shadow: 0 0 16px var(--hover-glow, #fff), 0 0 28px var(--hover-glow, #fff);
+  border-color: var(--hover-border, #fff) !important;
+}
+#itu-theme a[data-hover-button]:active,
+#itu-theme button[data-hover-button]:active {
+  transform: scale(.99);
+}
+#itu-theme .itu-cat-rain {
+  position:absolute;
+  top:-40px;
+  z-index:9999;
+  pointer-events:none;
+  animation:ituCatFall linear forwards;
+  line-height:1;
+}
+@keyframes ituCatFall {
+  0% { transform:translateY(-30px) rotate(0deg); opacity:0; }
+  10% { opacity:1; }
+  90% { opacity:1; }
+  100% { transform:translateY(750px) rotate(360deg); opacity:0; }
+}
+</style>
+
+<!-- COLOR BUTTON -->
+<button onclick="
+var b=document.getElementById('itu-theme');
+var themes=[
+  {bg:'#050505',border:'#888',glow:'none',header:'linear-gradient(135deg,#111,#222,#080808)',panel:'#111',button:'#181818',accent:'#fff',secondary:'#ddd',footer:'#ccc',nav:'#fff'},
+  {bg:'#100a24',border:'#a855f7',glow:'0 0 22px #7c3aed',header:'linear-gradient(135deg,#101b42,#281044,#101c38)',panel:'#0d1020',button:'#10172a',accent:'#72eaff',secondary:'#c3a5ff',footer:'#c39aff',nav:'#d1c4ff'},
+  {bg:'#071b12',border:'#22c55e',glow:'0 0 22px #16a34a',header:'linear-gradient(135deg,#064e3b,#14532d,#052e16)',panel:'#092519',button:'#103b28',accent:'#86efac',secondary:'#bbf7d0',footer:'#86efac',nav:'#bbf7d0'},
+  {bg:'#24100a',border:'#f97316',glow:'0 0 22px #ea580c',header:'linear-gradient(135deg,#7c2d12,#431407,#1c1917)',panel:'#27130b',button:'#3b1b0c',accent:'#fdba74',secondary:'#fed7aa',footer:'#fdba74',nav:'#fed7aa'},
+  {bg:'#081526',border:'#38bdf8',glow:'0 0 22px #0284c7',header:'linear-gradient(135deg,#0c4a6e,#172554,#082f49)',panel:'#0b1d30',button:'#102a43',accent:'#7dd3fc',secondary:'#bae6fd',footer:'#7dd3fc',nav:'#bae6fd'}
+];
+var n=(Number(b.getAttribute('data-color'))+1)%themes.length;
+b.setAttribute('data-color',n);
+var t=themes[n];
+b.style.background=t.bg;
+b.style.borderColor=t.border;
+b.style.boxShadow=t.glow;
+b.querySelectorAll('[data-color-bg]').forEach(function(e){e.style.background=n===0?e.getAttribute('data-bw-bg'):e.getAttribute('data-color-bg-'+n);});
+b.querySelectorAll('[data-color-border]').forEach(function(e){e.style.borderColor=n===0?'#888':t.border;});
+b.querySelectorAll('[data-color-text]').forEach(function(e){e.style.color=n===0?(e.getAttribute('data-bw-text')||'#fff'):t.accent;});
+b.querySelectorAll('[data-color-shadow]').forEach(function(e){e.style.textShadow=n===0?'none':'0 0 12px '+t.accent;});
+b.querySelectorAll('[data-hover-button]').forEach(function(e){
+e.style.setProperty('--hover-glow',n===0?'#fff':t.accent);
+e.style.setProperty('--hover-border',n===0?'#fff':t.border);
+});
+var header=b.querySelector('[data-header]');
+if(header)header.style.background=t.header;
+var nav=b.querySelector('[data-nav]');
+if(nav)nav.style.background=t.panel;
+b.querySelectorAll('[data-nav-link]').forEach(function(e){e.style.background=t.button;});
+var heading=b.querySelector('[data-nav-heading]');
+if(heading)heading.style.color=t.nav;
+var footer=b.querySelector('[data-footer]');
+if(footer)footer.style.color=t.footer;
+var name=b.querySelector('[data-club-name]');
+if(name){name.style.color=t.accent;name.style.textShadow=n===0?'none':'0 0 12px '+t.accent;}
+this.innerHTML=n===0?'◼ BLACK &amp; WHITE':'✦ '+['','PURPLE','GREEN','ORANGE','BLUE'][n]+' THEME';
+this.style.background=n===0?'#111':t.header;
+this.style.color='#fff';
+" style="display:block;width:100%;background:#111;color:#fff;border:1px solid #fff;border-radius:9px;padding:12px;margin-bottom:10px;font-weight:bold;letter-spacing:2px;cursor:pointer;transition:all .25s ease;">✦ TURN ON COLOR</button>
+
+<!-- CAT RAIN BUTTON -->
+<button data-hover-button data-hover-color="#ff9de2" data-hover-border="#ffc5ef"
+onclick="
+var box=document.getElementById('itu-theme');
+var cats=['😼','🐱','🐈','🐈‍⬛','😺','😻','😹','🙀','🐾'];
+for(var i=0;i<32;i++){
+  (function(){
+    var cat=document.createElement('span');
+    cat.className='itu-cat-rain';
+    cat.textContent=cats[Math.floor(Math.random()*cats.length)];
+    cat.style.left=(Math.random()*92)+'%';
+    cat.style.fontSize=(18+Math.random()*20)+'px';
+    cat.style.animationDuration=(2.5+Math.random()*2.5)+'s';
+    cat.style.animationDelay=(Math.random()*1.8)+'s';
+    box.appendChild(cat);
+    setTimeout(function(){cat.remove();},7500);
+  })();
+}
+"
+style="--hover-glow:#fff;--hover-border:#fff;display:block;width:100%;background:#171717;color:#fff;border:1px solid #888;border-radius:9px;padding:12px;margin-bottom:14px;font-size:20px;cursor:pointer;">😼</button>
+
+<!-- HEADER -->
+<div data-header data-color-bg="linear-gradient(135deg,#101b42,#281044,#101c38)" data-bw-bg="linear-gradient(135deg,#111,#222,#080808)" style="text-align:center;padding:20px 8px;background:linear-gradient(135deg,#111,#222,#080808);border:1px solid #888;border-radius:12px;margin-bottom:14px;">
+  <div data-club-name data-color-text="#72eaff" data-bw-text="#fff" style="font-size:28px;font-weight:900;letter-spacing:4px;color:#fff;text-shadow:none;">♞ SWAG ♞</div>
+  <div data-color-text="#c3a5ff" style="font-size:10px;letter-spacing:5px;color:#ddd;margin-top:8px;">C L U B</div>
+  <div style="font-size:10px;letter-spacing:3px;color:#aaa;margin-top:12px;">PLAY &bull; LEARN &bull; GROW</div>
+</div>
+
+<!-- NAVIGATION -->
+<div data-nav data-color-bg="#0d1020" data-bw-bg="#111" style="background:#111;border:1px solid #777;border-radius:12px;padding:14px;margin-bottom:14px;">
+  <div data-nav-heading data-color-text="#d1c4ff" style="text-align:center;font-size:13px;font-weight:bold;letter-spacing:3px;margin-bottom:12px;color:#fff;">✦ NAVIGATION ✦</div>
+
+  <a data-nav-link data-hover-button data-hover-color="#00bfff" data-hover-border="#72eaff"
+  href="https://www.chess.com/club/the-pawn-palace"
+  data-color-bg="#10172a" data-bw-bg="#181818"
+  style="--hover-glow:#fff;--hover-border:#fff;display:block;background:#181818;color:#fff;text-decoration:none;border:1px solid #888;border-radius:8px;padding:12px;margin:8px 0;font-weight:bold;">♟ &nbsp; CLUB HOME &rarr;</a>
+
+  <a data-nav-link data-hover-button data-hover-color="#00dfff" data-hover-border="#83eaff"
+  href="https://www.chess.com/clubs/members/the-pawn-palace"
+  data-color-bg="#10172a" data-bw-bg="#181818"
+  style="--hover-glow:#fff;--hover-border:#fff;display:block;background:#181818;color:#fff;text-decoration:none;border:1px solid #888;border-radius:8px;padding:12px;margin:8px 0;font-weight:bold;">♙ &nbsp; MEMBERS &rarr;</a>
+
+  <a data-nav-link data-hover-button data-hover-color="#b65cff" data-hover-border="#d18aff"
+  href="https://www.chess.com/clubs/events/the-pawn-palace"
+  data-color-bg="#10172a" data-bw-bg="#181818"
+  style="--hover-glow:#fff;--hover-border:#fff;display:block;background:#181818;color:#fff;text-decoration:none;border:1px solid #888;border-radius:8px;padding:12px;margin:8px 0;font-weight:bold;">⚡ &nbsp; EVENTS &rarr;</a>
+</div>
+
+<!-- FOOTER -->
+<div data-footer data-color-text="#c39aff" style="text-align:center;padding:10px;color:#ccc;font-size:13px;font-style:italic;">&ldquo;Meow Meeeeow&rdquo; &nbsp;- once said by a hungry cat</div>
+<div style="height:1px;background:#777;margin:6px 0 12px;"></div>
+<div style="text-align:center;color:#aaa;font-size:9px;letter-spacing:4px;">S W A G &bull; E S T . 2 0 2 6</div>
+
+</div>
